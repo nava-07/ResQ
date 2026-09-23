@@ -12,8 +12,9 @@ export const SocketProvider = ({ children }) => {
 
   useEffect(() => {
     if (user) {
-      const newSocket = io('http://localhost:5000', {
-        transports: ['websocket'],
+      const socketUrl = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000';
+      const newSocket = io(socketUrl, {
+        transports: ['websocket', 'polling'],
       });
       setSocket(newSocket);
       return () => newSocket.disconnect();
